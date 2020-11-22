@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('food_seq_model.h5', 'rb'))
 
 @app.route('/')
 def home():
@@ -14,11 +14,16 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
-
-    output = round(prediction[0], 2)
+    img_url = request.form.values()
+    from keras.preprocessing import image
+    image_predict = image.load_img(img_url, target_size=(64,64))
+    image_predict = image.img_to_array(image_predict)
+    image_predict = np.expand_dims(image_predict, axis=0)
+    prediction = model.predict(image_predict)
+    if result[0][0] == 1:
+        output = "Found it!"
+    else:
+        output = "Image classification is tough. Train me more!!"
 
     return render_template('index.html', prediction_text='The Image belongs to the classification of {}'.format(output))
 
