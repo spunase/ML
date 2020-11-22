@@ -20,7 +20,7 @@ def predict():
     '''
     img_url = request.form.values()
 
-    image_predict = image.load_img('baklava.jpg', target_size=(64,64))
+    image_predict = image.load_img('templates/baklava.jpg', target_size=(64,64))
     image_predict = image.img_to_array(image_predict)
     image_predict = np.expand_dims(image_predict, axis=0)
     
