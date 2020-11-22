@@ -1,11 +1,13 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
+from keras.models import load_model
+from keras.preprocessing import image
 import pickle
 
 app = Flask(__name__)
-from keras.models import load_model
-from keras.preprocessing import image
-model = load_model('food_seq_model.h5')
+
+# model = load_model('food_seq_model.h5')
+model = pickle.load(open('model.pkl','rb'))
 
 @app.route('/')
 def home():
