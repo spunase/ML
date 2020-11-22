@@ -1,7 +1,7 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 from keras.models import load_model
-from keras.preprocessing import image
+from keras.preprocessing.image import image
 import pickle
 
 app = Flask(__name__)
@@ -19,12 +19,12 @@ def predict():
     For rendering results on HTML GUI
     '''
     img_url = request.form.values()
-    print(img_url)
-    image_predict = image.load_img('baklava.jpg', target_size=(64,64))
-    image_predict = image.img_to_array(image_predict)
+
+    image_predict = load_img('baklava.jpg', target_size=(64,64))
+    image_predict = img_to_array(image_predict)
     image_predict = np.expand_dims(image_predict, axis=0)
     
-    prediction = model.predict(image_predict)
+    prediction = model.predict([[2, 9, 6]])
     if result[0][0] == 1:
         output = "Found it!"
     else:
