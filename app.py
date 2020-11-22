@@ -28,10 +28,11 @@ def predict():
       # output = round(prediction[0], 2)
     prediction = model.predict(image_predict)
   
-    output = prediction
-      
+    output = prediction[0][0]
+    label = round(prediction[0][1])
 
-    return render_template('index.html', prediction_text='The Image belongs to the classification of {}'.format(output))
+    return render_template('index.html', prediction_text='The Image belongs to the classification of {}'.format(output), 
+    prediction_label='The Image belongs to the classification of {}'.format(label))
 
 
 if __name__ == "__main__":
