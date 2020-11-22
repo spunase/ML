@@ -19,6 +19,7 @@
 
      <!-- Main Input For Receiving Query to our ML -->
     <form action="{{ url_for('predict')}}"method="post">
+        <label for="file">Choose file with the image you want to classify</label>
 		<input type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" />
 
         <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
