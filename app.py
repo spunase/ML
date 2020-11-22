@@ -1,14 +1,14 @@
 
 from flask import Flask, request, jsonify, render_template
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from keras.preprocessing import image
 import pickle
 import numpy as np
 
 app = Flask(__name__)
 
-# model = load_model('food_seq_model.h5')
-model = pickle.load(open('model.pkl','rb'))
+model = load_model('model.h5')
+# model = pickle.load(open('model.pkl','rb'))
 
 @app.route('/')
 def home():
@@ -24,13 +24,12 @@ def predict():
     image_predict = image.load_img('templates/baklava.jpg', target_size=(64,64))
     image_predict = image.img_to_array(image_predict)
     image_predict = np.expand_dims(image_predict, axis=0)
-    prediction = model.predict([[2, 9, 6]])
-    output = round(prediction[0], 2)
-    if prediction[0] == 1:
-        output = "Found it!"
-    else:
-        output = "Image classification is tough. Train me more!!"
-    print(output)    
+    # prediction = model.predict([[2, 9, 6]])
+      # output = round(prediction[0], 2)
+    prediction = model.predict(image_predict)
+  
+    output = prediction
+      
 
     return render_template('index.html', prediction_text='The Image belongs to the classification of {}'.format(output))
 
